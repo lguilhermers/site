@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmação de Presença - Casamento</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        header {
+            background-color: #b38b6d;
+            color: white;
+            padding: 20px;
+            font-size: 24px;
+        }
+        .container {
+            margin: 20px auto;
+            max-width: 500px;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        button {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #b38b6d;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #8c6a50;
+        }
+    </style>
+</head>
+<body>
+    <header>Nosso Casamento</header>
+    <div class="container">
+        <h2>Confirme sua presença</h2>
+        <form id="rsvp-form">
+            <label for="name">Nome:</label>
+            <input type="text" id="name" required>
+            
+            <label for="attendance">Você estará presente?</label>
+            <select id="attendance" required>
+                <option value="semana-toda">Passar a semana toda</option>
+                <option value="cerimonia">Só para a cerimônia</option>
+                <option value="nao-vou">Não vou</option>
+            </select>
+            
+            <button type="submit">Enviar</button>
+        </form>
+        <p id="response-message"></p>
+    </div>
+    
+    <script>
+        document.getElementById("rsvp-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+            let name = document.getElementById("name").value;
+            let attendance = document.getElementById("attendance").value;
+            let message = `Obrigado, ${name}, por confirmar sua presença!`;
+            document.getElementById("response-message").innerText = message;
+        });
+    </script>
+</body>
+</html>
