@@ -10,14 +10,24 @@
             text-align: center;
             margin: 0;
             padding: 0;
-            background-color: #f9f9f9;
-            color: #5a3e2b;
+            background-color: #A9A9A9; /* Tom de chumbo claro */
+            color: #4A3F35;
         }
         header {
-            background-color: #b38b6d;
+            background-color: #D97742; /* Laranja sofisticado */
             color: white;
             padding: 30px;
             font-size: 28px;
+        }
+        nav {
+            background: #6B8E23; /* Verde claro */
+            padding: 15px;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            margin: 0 15px;
         }
         .container {
             margin: 20px auto;
@@ -27,29 +37,15 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
         }
-        label {
-            display: block;
-            margin-top: 10px;
-        }
         button {
             margin-top: 15px;
             padding: 10px;
-            background-color: #b38b6d;
+            background-color: #D97742;
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
-        }
-        button:hover {
-            background-color: #8c6a50;
-        }
-        .gallery {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 20px;
         }
         .gallery img {
             width: 150px;
@@ -57,70 +53,80 @@
             border-radius: 10px;
             object-fit: cover;
         }
-        .details {
-            margin-top: 20px;
-        }
     </style>
 </head>
 <body>
     <header>Nosso Casamento</header>
+    <nav>
+        <a href="#bem-vindos">Bem-vindos!</a>
+        <a href="#rsvp">Confirme sua presença</a>
+        <a href="#contato">Entrar em contato</a>
+    </nav>
     
-    <div class="container">
-        <h2>Sobre Nós</h2>
-        <p>Estamos muito felizes em compartilhar esse momento especial com vocês. Esperamos que possam celebrar conosco!</p>
-    </div>
-    
-    <div class="container">
-        <h2>Galeria de Fotos</h2>
+    <div class="container" id="bem-vindos">
+        <h2>Bem-vindos!</h2>
+        <p>Estamos muito felizes em compartilhar esse momento especial com vocês!</p>
         <div class="gallery">
             <img src="https://via.placeholder.com/150" alt="Foto do casal">
             <img src="https://via.placeholder.com/150" alt="Foto do casal">
-            <img src="https://via.placeholder.com/150" alt="Foto do casal">
         </div>
-    </div>
-    
-    <div class="container details">
-        <h2>Detalhes do Evento</h2>
         <p><strong>Data:</strong> 15 de Junho de 2025</p>
-        <p><strong>Local:</strong> Espaço Jardim Encantado, Rua das Flores, 123 - São Paulo</p>
+        <p><strong>Local:</strong> Espaço Jardim Encantado, São Paulo</p>
         <p><strong>Horário:</strong> 17:00</p>
-        <iframe 
-            width="100%" 
-            height="250" 
-            frameborder="0" 
-            style="border:0" 
-            allowfullscreen 
-            loading="lazy" 
-            referrerpolicy="no-referrer-when-downgrade" 
-            src="https://www.google.com/maps/embed/v1/place?key=YOUR_GOOGLE_MAPS_API_KEY&q=Espa%C3%A7o+Jardim+Encantado,S%C3%A3o+Paulo">
-        </iframe>
     </div>
     
-    <div class="container">
+    <div class="container" id="rsvp">
         <h2>Confirme sua presença</h2>
         <form id="rsvp-form">
-            <label for="name">Nome:</label>
+            <label>Nome:</label>
             <input type="text" id="name" required>
-            
-            <label for="attendance">Você estará presente?</label>
-            <select id="attendance" required>
-                <option value="semana-toda">Passar a semana toda</option>
-                <option value="cerimonia">Só para a cerimônia</option>
-                <option value="nao-vou">Não vou</option>
-            </select>
-            
+            <label>Número de acompanhantes:</label>
+            <input type="number" id="guests" min="0" required>
+            <label>Mensagem privada:</label>
+            <textarea id="private-message"></textarea>
+            <label>Mensagem pública:</label>
+            <textarea id="public-message"></textarea>
             <button type="submit">Enviar</button>
         </form>
-        <p id="response-message"></p>
+        <h3>Mensagens dos convidados</h3>
+        <div id="public-messages"></div>
+    </div>
+    
+    <div class="container" id="contato">
+        <h2>Entrar em contato</h2>
+        <form id="contact-form">
+            <label>Nome:</label>
+            <input type="text" id="contact-name" required>
+            <label>Email:</label>
+            <input type="email" id="contact-email" required>
+            <label>Assunto:</label>
+            <input type="text" id="contact-subject" required>
+            <label>Comentário:</label>
+            <textarea id="contact-message" required></textarea>
+            <button type="submit">Enviar</button>
+        </form>
     </div>
     
     <script>
         document.getElementById("rsvp-form").addEventListener("submit", function(event) {
             event.preventDefault();
             let name = document.getElementById("name").value;
-            let attendance = document.getElementById("attendance").value;
-            let message = `Obrigado, ${name}, por confirmar sua presença!`;
-            document.getElementById("response-message").innerText = message;
+            let guests = document.getElementById("guests").value;
+            let publicMessage = document.getElementById("public-message").value;
+            let messageContainer = document.getElementById("public-messages");
+            let messageElement = document.createElement("p");
+            messageElement.innerHTML = `<strong>${name} (+${guests}):</strong> ${publicMessage}`;
+            messageContainer.appendChild(messageElement);
+            alert("Obrigado por confirmar sua presença!");
+        });
+
+        document.getElementById("contact-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+            let name = document.getElementById("contact-name").value;
+            let email = document.getElementById("contact-email").value;
+            let subject = document.getElementById("contact-subject").value;
+            let message = document.getElementById("contact-message").value;
+            window.location.href = `mailto:seuemail@exemplo.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`Nome: ${name}\nEmail: ${email}\nMensagem: ${message}`)}`;
         });
     </script>
 </body>
